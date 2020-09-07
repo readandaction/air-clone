@@ -4,7 +4,11 @@ from . import models
 
 @admin.register(models.RoomType, models.HouseRule, models.Amenity, models.Facility)
 class ItemAdmin(admin.ModelAdmin):
-    pass
+
+    list_display = ("name", "used_by")
+
+    def used_by(self, obj):
+        return obj.rooms.count()
 
 
 @admin.register(models.Room)
@@ -44,11 +48,7 @@ class RoomAdmin(admin.ModelAdmin):
         (
             "Detail",
             {
-                "fields": (
-                    "house_rules",
-                    "amenities",
-                    "facilities",
-                ),
+                "fields": ("house_rules", "amenities", "facilities", "room_type"),
             },
         ),
     )
@@ -67,6 +67,7 @@ class RoomAdmin(admin.ModelAdmin):
         "check_out",
         "instant_book",
         "count_amenities",
+        "count_photos",
     )
     list_filter = (
         "host__superhost",
@@ -82,10 +83,11 @@ class RoomAdmin(admin.ModelAdmin):
     def count_amenities(self, obj):
         return obj.amenities.count()
 
+    def count_photos(self, obj):
+        return obj.photos.count()
+
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
 
     """ Photo Admin Definition"""
-
-    pass
