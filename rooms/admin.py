@@ -68,6 +68,7 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "count_amenities",
         "count_photos",
+        "total_reviews",
     )
     list_filter = (
         "host__superhost",
